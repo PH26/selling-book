@@ -8,7 +8,22 @@
           <div class="row">
             <!-- left column -->
             <div class="col-md-12">
-             @include ('backend.blocks.error')
+              @if(count($errors) > 0)
+                  <div class="alert alert-danger">
+                    <ul>
+                      @foreach ($errors->all() as $error)
+                             <li>{!! $error !!}</li>
+                      @endforeach
+                    </ul>
+                  </div>
+              @endif
+              @if(session('thongbao'))
+              <div class="alert alert-success">
+                    {{session('thongbao')}}
+              </div>
+              @endif()
+             <!-- @include ('backend.blocks.error') -->
+
               <!-- general form elements -->
               <div class="box box-primary">
                 <!-- form start -->
@@ -18,9 +33,9 @@
                     <div class="form-group">
                         <label for="exampleInputEmail1" class="col-md-2">Thể Loại</label>
                         <div class="col-md-10">
-                            <select class="form-control" name="prarent_id">
+                            <select class="form-control" name="category_id">
                               <?php foreach ($cate as  $value): ?>
-                                  <option><?php echo $value ['prarent_id'] ?></option>
+                                  <option value="<?php echo $value['id'] ?>"><?php echo $value['name'] ?></option>
                               <?php endforeach; ?>
                             </select>
                         </div>
@@ -47,20 +62,21 @@
                      <div class="form-group">
                         <label for="" class="col-md-2">Mô tả sản phẩm</label>
                         <div class="col-md-10">
-                            <textarea class="form-control focus-form" name="intro" id="txtndhienthi"> {!! old('txtndchitiet') !!} </textarea>
+                            <textarea class="form-control focus-form ckeditor " name="intro" id="txtndhienthi"> {!! old('txtndchitiet') !!} </textarea>
                         </div>
                       </div>
                        <div class="form-group">
                         <label for="" class="col-md-2">Mô tả chi tiết </label>
                         <div class="col-md-10">
-                            <textarea class="form-control" name="content" id="txtndchitiet"> {!! old('txtndchitiet') !!} </textarea>
+                            <textarea class="form-control ckeditor " name="content" id="txtndchitiet"> {!! old('txtndchitiet') !!} </textarea>
 
                         </div>
+
                       </div>
                       <div class="form-group">
                         <label for="" class="col-md-2">Hình ảnh</label>
                         <div class="col-md-10">
-                            <input type="file" name="image">
+                            <input type="file" name="fileimages">
                         </div>
                       </div>
 

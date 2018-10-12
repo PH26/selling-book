@@ -2,8 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Users;
+use App\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Contracts\Auth\Guard;
+// use Illuminate\Contracts\Auth\Registrar;
+// use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+// use App\Http\Requests\LoginRequest;
+// use App\Http\Requests\RegisterReqeust;
+// use Illuminate\Support\Facades\Route;
+// use Illuminate\Routing\Route;
 
 class UsersController extends Controller
 {
@@ -12,9 +23,10 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function getList()
     {
-        //
+      $listUsers = DB::table('users')->select('id','username','password','email','firstname','phone','address')->orderBy('id','DESC')->paginate(10);
+      return view('backend.user.list',compact('listUsers'));
     }
 
     /**
@@ -22,9 +34,9 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function getAdd()
     {
-        //
+          return view('backend.user.add');
     }
 
     /**
@@ -33,9 +45,18 @@ class UsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function postAdd(Request $request)
     {
-        //
+      $users = new User;
+      $users->username = $request->username ;
+      $users->password =Hash::make($request->password);
+      $users->email= $request->email ;
+      $users->firstname  = $request->firstname ;
+      $users->phone = $request->phone ;
+      $users->address = $request->address;
+      $users->remember_token = $request->_token;
+      $users->save();
+     return redirect()->route('user.getList');
     }
 
     /**
@@ -44,9 +65,10 @@ class UsersController extends Controller
      * @param  \App\Users  $users
      * @return \Illuminate\Http\Response
      */
-    public function show(Users $users)
+    public function getEdit($id)
     {
-        //
+      $data = User::find($id);
+      return view('backend.user.edit',compact('data'));
     }
 
     /**
@@ -55,9 +77,18 @@ class UsersController extends Controller
      * @param  \App\Users  $users
      * @return \Illuminate\Http\Response
      */
-    public function edit(Users $users)
+    public function postEdit(Request $request,$id)
     {
-        //
+      $users = User::find($id);
+      $users->username = $request->username ;
+      $users->password = Hash::make($request->password);
+      $users->email= $request->email;
+      $users->firstname  = $request->firstname ;
+      $users->phone = $request->phone;
+      $users->address = $request->address;
+      $users->remember_token = $request->_token;
+      $users->save();
+     return redirect()->route('user.getList');
     }
 
     /**
@@ -78,8 +109,11 @@ class UsersController extends Controller
      * @param  \App\Users  $users
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Users $users)
+    public function getDelete($id)
     {
-        //
+      $product = User::find($id);
+      $product->delete($id);
+      return redirect()->route('user.getList');
     }
+  
 }

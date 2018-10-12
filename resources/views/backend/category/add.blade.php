@@ -8,6 +8,18 @@
           <div class="row">
             <!-- left column -->
             <div class="col-md-12">
+              @if(count($errors) > 0)
+                  <div class="alert alert-danger">
+                      @foreach ($errors->all() as $error)
+                             {!! $error !!}
+                      @endforeach
+                  </div>
+              @endif
+              @if(session('thongbao'))
+              <div class="alert alert-success">
+                    {{session('thongbao')}}
+              </div>
+              @endif()
              <!-- @include ('backend.blocks.error') -->
               <!-- general form elements -->
               <div class="box box-primary">
@@ -27,7 +39,13 @@
                       <div class="form-group">
                         <label  class="col-md-2" >Prarent_id</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" name="prarent_id"  placeholder="Nhập số ..." value="{!! old('prarent_id') !!}">
+
+                          <select class="form-control" name="prarent_id">
+                            <option value="0">Mời bạn chọn</option>
+                            <?php cate_parent($data); ?>
+                          </select>
+
+
                         </div>
                       </div>
                   </div><!-- /.box-body -->

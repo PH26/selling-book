@@ -12,58 +12,66 @@
               <!-- general form elements -->
               <div class="box box-primary">
                 <!-- form start -->
-                <form role="form" class="form-horizontal" method="post" action="{!!route('product.postEdit',$data->id)!!}" >
+                <form role="form" class="form-horizontal" method="post" action="{!!route('product.postEdit',$product->id)!!}" enctype="multipart/form-data">
                 <input type="hidden" name="_token" value="{!! csrf_token() !!}" />
                   <div class="box-body">
+
                     <div class="form-group">
                         <label for="exampleInputEmail1" class="col-md-2">Thể Loại</label>
                         <div class="col-md-10">
-                            <select class="form-control" name="prarent_id">
-                              <?php foreach ($cate as  $value): ?>
-                                  <option><?php echo $value ['prarent_id'] ?></option>
-                              <?php endforeach; ?>
-                            </select>
+                              <select class="form-control" name="category_id">
+                                <option>Mời bạn chọn</option>
+                                <?php cate_parent($category,0,"--",$product["cate_id"]); ?>
+                              </select>
                         </div>
                       </div>
+
                       <div class="form-group">
                         <label for="" class="col-md-2">Tên sản phẩm</label>
                         <div class="col-md-10">
-                            <input type="text" class="form-control" name="name"  placeholder="Tên sản phẩm..." value="{{$data->name}}">
+                            <input type="text" class="form-control" name="name"  placeholder="Tên sản phẩm..." value="{{$product->name}}">
                         </div>
                       </div>
+
                       <div class="form-group">
                         <label for="" class="col-md-2">Giá</label>
                         <div class="col-md-10">
-                            <input type="text" class="form-control" name="price" placeholder="Giá sản phẩm..." value="{{$data->price}}">
+                            <input type="text" class="form-control" name="price" placeholder="Giá sản phẩm..." value="{{$product->price}}">
                         </div>
                       </div>
 
                       <div class="form-group">
                         <label for="" class="col-md-2">Giá khuyến mại</label>
                         <div class="col-md-10">
-                            <input type="text" class="form-control" name="pricesale" placeholder="Giá khuyến mại..." value="{{$data->pricesale}}">
+                            <input type="text" class="form-control" name="pricesale" placeholder="Giá khuyến mại..." value="{{$product->pricesale}}">
                         </div>
                       </div>
-                     <div class="form-group">
+
+
+                      <div class="form-group">
                         <label for="" class="col-md-2">Mô tả sản phẩm</label>
                         <div class="col-md-10">
-                            <textarea class="form-control focus-form" name="intro" id="txtndhienthi"> {{$data->intro}} </textarea>
+                            <textarea class="form-control focus-form ckeditor" name="intro" id="txtndhienthi"> {{$product->intro}} </textarea>
                         </div>
                       </div>
+
+
                        <div class="form-group">
                         <label for="" class="col-md-2">Mô tả chi tiết </label>
                         <div class="col-md-10">
-                            <textarea class="form-control" name="content" id="txtndchitiet"> {{$data->content}} </textarea>
-
+                            <textarea class="form-control ckeditor" name="content" id="demo"> {{$product->content}} </textarea>
                         </div>
                       </div>
+
+
                       <div class="form-group">
                         <label for="" class="col-md-2">Hình ảnh</label>
                         <div class="col-md-10">
-                            <input type="file" name="image">
+                            <input type="file" name="fileimages"><br />
+                            <img src="{!! asset('upload/'.$product['image']) !!}" width="120">
+                            <input type="hidden" value="{!! $product['image']!!}" name="img_current" />
                         </div>
                       </div>
-
 
                   </div><!-- /.box-body -->
 
