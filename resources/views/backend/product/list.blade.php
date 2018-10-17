@@ -34,7 +34,10 @@
                             }
                           ?>
                         </td>
-                        <td>{!!$product->image!!}</td>
+                        <td>
+                          <img src="{!! asset('upload/'.$product->image) !!}" width="40" alt="{!! $product->name !!}">
+                        </td>
+                        </td>
                         <td>{!! $product->created_at !!} - {!! $product->updated_at !!}</td>
                         <td>
                           <?php
@@ -54,8 +57,7 @@
                     </tbody>
                   </table>
                   <div class="pull-right">
-                    <?php $arrProduct->setPath('list'); ?>
-                    <?php echo $arrProduct->render(); ?>
+                      {!! $arrProduct->render()!!}
                   </div>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->

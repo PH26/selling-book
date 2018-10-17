@@ -18,14 +18,10 @@ class Product extends Model
     return $this->belongsTo('App\User');
   }
 
-  // public function pimages(){
-  //   return $this->hasMany('App\ProductImage');
-  // }
-
   public function danhgia(){
     return $this->hasMany('App\Danhgia');
   }
-  // public function chitiethoadon(){
-  //   return $this->hasMany('App\chitiethoadon');
-  // }
+  public function chitiethoadon(){
+    return $this->hasMany('App\chitiethoadon');
+  }
 }

@@ -23,7 +23,12 @@
                     <div class="form-group">
                       <label  class="col-md-2" >Prarent_id</label>
                       <div class="col-md-8">
-                          <input type="text" class="form-control" name="prarent_id" value="{{($data->prarent_id) }}">
+
+                        <select class="form-control" name="prarent_id">
+                          <option value="0">Mời bạn chọn</option>
+                          <?php cate_parent($parent,0,"--",$data["prarent_id"]); ?>
+                        </select>
+
                       </div>
                     </div>
                   </div><!-- /.box-body -->

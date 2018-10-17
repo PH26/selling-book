@@ -32,7 +32,7 @@
                           ?>
                         </td>
                         <td>
-                               {{$danhgias->image}}
+                            <img src="{!! asset('upload/'.$danhgias->image) !!}" width="40" alt="{!! $danhgias->name !!}">
                         </td>
                       </tr>
                       <!-- <tr class="hide_listcthd show_listcthd_{!! $danhgias->id !!}"> -->
